@@ -1,58 +1,104 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import styled from 'styled-components';
 
 // Screens
-import HomeScreen from './Screens/HomeScreen';
-import DetailsScreen from './Screens/Posts/Posts';
-import SettingsScreen from './Screens/SettingsScreen';
+import HomeScreen from './Screens/HomeScreen/HomeScreen.js';
+import DetailsScreen from './Screens/Posts/Posts.js';
+import SettingsScreen from './Screens/VideoScreen/SettingsScreen.js';
+import MuneScreen from './Screens/MenuScreen/MenuScreen.js';
+
 
 //Screen names
 const homeName = "Bosh Sahifa";
 const detailsName = "Yangliklar";
-const settingsName = "Yordamchi";
+// const newsName = "Yangliklar";
+const settingsName = "Maruzalar";
+const menuName = "Menu";
 
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
+
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName={homeName}
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-                        let rn = route.name;
+        <>
+            <NavigationContainer >
+                <Tab.Navigator
+                    initialRouteName={homeName}
+                    screenOptions={({ route }) => ({
+                        tabBarStyle: styles.tabBarStyle,
 
-                        if (rn === homeName) {
-                            iconName = focused ? 'home' : 'home-outline';
+                        tabBarIcon: ({ focused, color, size }) => {
+                            let iconName;
+                            let rn = route.name;
 
-                        } else if (rn === detailsName) {
-                            iconName = focused ? 'list' : 'list-outline';
+                            if (rn === homeName) {
+                                iconName = focused ? 'home' : 'home-outline';
 
-                        } else if (rn === settingsName) {
-                            iconName = focused ? 'settings' : 'settings-outline';
-                        }
+                            } else if (rn === detailsName) {
+                                iconName = focused ? 'newspaper' : 'newspaper-outline';
 
-                        // You can return any component that you like here!
-                        return <Ionicons name={iconName} size={size} color={"#0B0B92"} />;
-                    },
-                })}
-                tabBarOptions={{
-                    activeTintColor: '#0B0B92',
-                    inactiveTintColor: '#0B0B92',
-                    labelStyle: { paddingBottom: 10, fontSize: 10 },
-                    style: { padding: 25, height: 70 }
-                }}>
+                            } else if (rn === settingsName) {
+                                iconName = focused ? 'albums-sharp' : 'albums-outline';
+                            } else if (rn === menuName) {
+                                iconName = focused ? 'apps-sharp' : 'apps-outline';
+                            }
 
-                <Tab.Screen name={homeName} component={HomeScreen} />
-                <Tab.Screen name={detailsName} component={DetailsScreen} />
-                <Tab.Screen name={settingsName} component={SettingsScreen} />
+                            // You can return any component that you like here!
+                            return <Ionicons name={iconName} size={size} color={"#0B0B92"} />;
+                        },
 
-            </Tab.Navigator>
-        </NavigationContainer>
+                    })}
+                    tabBarOptions={{
+                        activeTintColor: '#0B0B92',
+                        inactiveTintColor: '#0B0B92',
+                        padding: '10px',
+                        labelStyle: { paddingBottom: 10, fontSize: 12, },
+                        style: { padding: 15, height: 70, backgroundColor: '#000' },
+                    }}>
+
+                    <Tab.Screen name={homeName} component={HomeScreen} />
+                    <Tab.Screen name={detailsName} component={DetailsScreen} />
+                    <Tab.Screen name={settingsName} component={SettingsScreen} />
+                    <Tab.Screen name={menuName} component={MuneScreen} />
+                </Tab.Navigator>
+            </NavigationContainer>
+
+        </>
     );
 }
+
+const styles = {
+    tabBarStyle: {
+        backgroundColor: '#fff',
+        height: 70,
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+    },
+    cardStyle: {
+        backgroundColor: '#000',
+    },
+    tabBarItemStyle: {
+        backgroundColor: '#00ff00',
+        margin: 5,
+        borderRadius: 10,
+    }
+};
+
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         padding: 24,
+//         backgroundColor: "#eaeaea"
+//     },
+//     title: {
+//         marginTop: 16,
+//         paddingVertical: 8,
+//         textAlign: "center",
+//     }
+// });
 
 export default MainContainer;
