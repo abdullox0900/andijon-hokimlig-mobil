@@ -44,5 +44,6 @@ export const PostText = styled.Text`
 
 export const PostDesc = styled.Text`
     font-size: 10px;
-    font-weight: 400;
+    font-weight: 500;
+    color: #cacaca;
 `

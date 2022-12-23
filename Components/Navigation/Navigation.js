@@ -1,13 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
-import PostInner from "./Screens/Posts/PostInner/PostInner";
+import PostInner from "../PostsCard/PostInner/PostInner.js";
 import PostsCard from "../PostsCard/PostsCard.js";
 
 const Stack = createNativeStackNavigator();
 
 export const PostNavigatin = () => {
-    return <Stack.Navigator>
-        <Stack.Screen name={'Yanglikl'} component={PostsCard} />
-        <Stack.Screen name={'Yangliklar'} component={PostInner} />
+    return <Stack.Navigator >
+        <Stack.Screen name={'Yangliklar'} component={PostsCard} />
+        <Stack.Screen name={'PostInner'} component={PostInner} />
     </Stack.Navigator>
 }

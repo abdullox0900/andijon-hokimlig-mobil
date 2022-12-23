@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components';
 
@@ -30,7 +29,7 @@ function MainContainer() {
                     initialRouteName={homeName}
                     screenOptions={({ route }) => ({
                         tabBarStyle: styles.tabBarStyle,
-
+                        headerShown:false,
                         tabBarIcon: ({ focused, color, size }) => {
                             let iconName;
                             let rn = route.name;
@@ -66,7 +65,6 @@ function MainContainer() {
                     <Tab.Screen name={menuName} component={MuneScreen} />
                 </Tab.Navigator>
             </NavigationContainer>
-
         </>
     );
 }
@@ -87,18 +85,5 @@ const styles = {
         borderRadius: 10,
     }
 };
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         padding: 24,
-//         backgroundColor: "#eaeaea"
-//     },
-//     title: {
-//         marginTop: 16,
-//         paddingVertical: 8,
-//         textAlign: "center",
-//     }
-// });
 
 export default MainContainer;

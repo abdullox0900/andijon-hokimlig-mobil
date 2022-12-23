@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity } from 'react-native';
 import { WrapperPosts, PostsCard, PostTextWrap, PostText, PostDesc, PostImg } from "./Style.js"
-import axios from 'axios';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function DetailsScreen({ navigation }) {
 
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
     const [loader, setLoader] = useState(true)
 
     const axiosPosts = () => {
         setLoader(true)
-        axios.get(`https://backend.digitalpark.uz/api/posts`)
-            .then(res => setData(res.data.data))
+        fetch('https://backend.digitalpark.uz/api/posts')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setData(data.data)
+            })
             .finally(() => {
                 setLoader(false)
             })
@@ -21,10 +26,11 @@ export default function DetailsScreen({ navigation }) {
         axiosPosts()
     }, [])
 
+    let myIcon = <Ionicons name={'calendar'} color={"#cacaca"} style={{ marginRight: '10px' }} />;
 
     return (
-        <WrapperPosts>
-            <ScrollView refreshControl={<RefreshControl refreshing={loader} onRefresh={axiosPosts} />}>
+        <ScrollView refreshControl={<RefreshControl refreshing={loader} onRefresh={axiosPosts} />}>
+            <WrapperPosts>
                 {
                     loader ? (
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -41,11 +47,10 @@ export default function DetailsScreen({ navigation }) {
                                         }} />
                                         <PostTextWrap>
                                             <PostText>
-                                                {item?.title_uz.slice(0, 60)}...
+                                                {item?.title_uz.slice(0, 80)}...
                                             </PostText>
                                             <PostDesc>
-                                                {item?.description_uz.slice(0, 80)}
-                                            </PostDesc>
+                                                {myIcon}{`${item?.created_at.slice(11, 16)} / ${item?.created_at.slice(8, 10)}.${item?.created_at.slice(5, 7)}.${item?.created_at.slice(0, 4)}`}</PostDesc>
                                         </PostTextWrap>
                                     </PostsCard>
                                 </TouchableOpacity>
@@ -53,7 +58,7 @@ export default function DetailsScreen({ navigation }) {
                         })
                     )
                 }
-            </ScrollView>
-        </WrapperPosts>
+            </WrapperPosts>
+        </ScrollView>
     );
 }
